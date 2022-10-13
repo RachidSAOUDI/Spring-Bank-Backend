@@ -1,9 +1,11 @@
 package ma.usmba.springbankbackend;
 
+import ma.usmba.springbankbackend.entities.AccountOperation;
 import ma.usmba.springbankbackend.entities.CurrentAccount;
 import ma.usmba.springbankbackend.entities.Customer;
 import ma.usmba.springbankbackend.entities.SavingAccount;
 import ma.usmba.springbankbackend.enums.AccountStatus;
+import ma.usmba.springbankbackend.enums.OperationType;
 import ma.usmba.springbankbackend.repositories.AccountOperationRepository;
 import ma.usmba.springbankbackend.repositories.BankAccountRepository;
 import ma.usmba.springbankbackend.repositories.CustomerRepository;
@@ -52,6 +54,16 @@ public class SpringBankBackendApplication {
                 savingAccount.setCustomer(cust);
                 savingAccount.setInterestRate(5.5);
                 bankAccountRepository.save(savingAccount);
+            });
+            bankAccountRepository.findAll().forEach(acc->{
+                for (int i = 0; i < 10; i++) {
+                    AccountOperation accountOperation = new AccountOperation();
+                    accountOperation.setOperationDate(new Date());
+                    accountOperation.setAmount(Math.random()*12000);
+                    accountOperation.setType(Math.random()>0.5? OperationType.DEBIT:OperationType.CREDIT);
+                    accountOperation.setBankAccount(acc);
+                    accountOperationRepository.save(accountOperation);
+                }
             });
         };
     }
