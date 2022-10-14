@@ -6,6 +6,7 @@ import ma.usmba.springbankbackend.enums.OperationType;
 import ma.usmba.springbankbackend.repositories.AccountOperationRepository;
 import ma.usmba.springbankbackend.repositories.BankAccountRepository;
 import ma.usmba.springbankbackend.repositories.CustomerRepository;
+import ma.usmba.springbankbackend.services.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,28 +24,9 @@ public class SpringBankBackendApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(BankAccountRepository bankAccountRepository){
+    CommandLineRunner commandLineRunner(BankService bankService){
         return args -> {
-            BankAccount bankAccount =
-                    bankAccountRepository.findById("0efcd972-6834-4157-aeef-0f6833826edf").orElse(null);
-            if (bankAccount != null) {
-                System.out.println("*********************************");
-                System.out.println(bankAccount.getId());
-                System.out.println(bankAccount.getBalance());
-                System.out.println(bankAccount.getStatus());
-                System.out.println(bankAccount.getCreatedAt());
-                System.out.println(bankAccount.getCustomer().getName());
-                System.out.println(bankAccount.getClass().getSimpleName());
-
-                if (bankAccount instanceof CurrentAccount) {
-                    System.out.println("Over Draft = " + ((CurrentAccount) bankAccount).getOverDraft());
-                } else if (bankAccount instanceof SavingAccount) {
-                    System.out.println("Interest rate = " + ((SavingAccount) bankAccount).getInterestRate());
-                }
-                bankAccount.getAccountOperations().forEach(op -> {
-                    System.out.println(op.getType() + "\t" + op.getAmount() + "\t" + op.getOperationDate());
-                });
-            }
+            bankService.consulter();
         };
     }
 
