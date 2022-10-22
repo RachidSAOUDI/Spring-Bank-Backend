@@ -2,11 +2,13 @@ package ma.usmba.springbankbackend.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ma.usmba.springbankbackend.dtos.CustomerDTO;
 import ma.usmba.springbankbackend.entities.*;
 import ma.usmba.springbankbackend.enums.OperationType;
 import ma.usmba.springbankbackend.exceptions.BalanceNotSufficientException;
 import ma.usmba.springbankbackend.exceptions.BankAccountNotFoundException;
 import ma.usmba.springbankbackend.exceptions.CustomerNotFoundException;
+import ma.usmba.springbankbackend.mappers.BankAccountMapperImpl;
 import ma.usmba.springbankbackend.repositories.AccountOperationRepository;
 import ma.usmba.springbankbackend.repositories.BankAccountRepository;
 import ma.usmba.springbankbackend.repositories.CustomerRepository;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +28,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private CustomerRepository customerRepository;
     private BankAccountRepository bankAccountRepository;
     private AccountOperationRepository accountOperationRepository;
+    private BankAccountMapperImpl dtoMapper;
 
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -64,8 +68,21 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public List<Customer> listCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        // ou bien
+        List<CustomerDTO> customerDTOS = customers.stream()
+                .map(customer -> dtoMapper.fromCustomer(customer))
+                .collect(Collectors.toList());
+        // ou bien basic method
+        /*
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
+        for (Customer customer : customers){
+            CustomerDTO customerDTO = dtoMapper.fromCustomer(customer);
+            customerDTOS.add(customerDTO);
+        }
+        */
+        return customerDTOS;
     }
 
     @Override
