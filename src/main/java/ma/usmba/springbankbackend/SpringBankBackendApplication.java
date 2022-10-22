@@ -1,5 +1,6 @@
 package ma.usmba.springbankbackend;
 
+import ma.usmba.springbankbackend.dtos.CustomerDTO;
 import ma.usmba.springbankbackend.entities.*;
 import ma.usmba.springbankbackend.enums.AccountStatus;
 import ma.usmba.springbankbackend.enums.OperationType;
@@ -31,7 +32,7 @@ public class SpringBankBackendApplication {
     CommandLineRunner commandLineRunner(BankAccountService bankAccountService){
         return args -> {
             Stream.of("Hassane", "Hanae", "Aissam").forEach(name->{
-                Customer customer = new Customer();
+                CustomerDTO customer = new CustomerDTO();
                 customer.setName(name);
                 customer.setEmail(name+"@usmba.ac.ma");
                 bankAccountService.saveCustomer(customer);
@@ -41,14 +42,6 @@ public class SpringBankBackendApplication {
                     bankAccountService.saveCurrentBankAccount(Math.random()*9000, 9000, customer.getId());
                     bankAccountService.saveSavingBankAccount(Math.random()*120000, 5.5, customer.getId());
 
-                    // cette solution
-/*                    bankAccountService.bankAccountList().forEach(bankAccount -> {
-                        for (int i = 0; i < 10; i++) {
-                            bankAccountService.credit(bankAccount.getId(), 10000+Math.random()*120000, "Credit");
-                            bankAccountService.debit(bankAccount.getId(), 1000+Math.random()*9000, "Debit");
-                        }
-                    });*/
-                    // ou bien
                     List<BankAccount> bankAccounts = bankAccountService.bankAccountList();
                     for (BankAccount bankAccount : bankAccounts){
                         for (int i = 0; i < 10; i++) {

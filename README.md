@@ -6,3 +6,6 @@
 * Spring Data JPA
 * H2 Database
 * Lombok
+
+## for test Request use 
+* postman
