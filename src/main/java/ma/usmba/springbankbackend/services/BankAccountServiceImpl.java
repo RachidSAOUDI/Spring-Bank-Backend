@@ -151,7 +151,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public void deleteCustomer(Long customerId){
-        customerRepository.findById(customerId);
+        customerRepository.deleteById(customerId);
     }
 
 }
