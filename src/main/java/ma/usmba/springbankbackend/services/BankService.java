@@ -14,7 +14,7 @@ public class BankService {
     @Autowired
     private BankAccountRepository bankAccountRepository;
     public void consulter(){
-        BankAccount bankAccount =
+        BankAccount bankAccount=
                 bankAccountRepository.findById("0efcd972-6834-4157-aeef-0f6833826edf").orElse(null);
         if (bankAccount != null) {
             System.out.println("*********************************");
@@ -31,7 +31,7 @@ public class BankService {
                 System.out.println("Interest rate = " + ((SavingAccount) bankAccount).getInterestRate());
             }
             bankAccount.getAccountOperations().forEach(op -> {
-                System.out.println(op.getType() + "\t" + op.getAmount() + "\t" + op.getOperationDate());
+                System.out.println(op.getType() + "\t" + op.getOperationDate() + "\t" + op.getAmount());
             });
         }
     }

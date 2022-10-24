@@ -4,11 +4,12 @@ import ma.usmba.springbankbackend.dtos.BankAccountDTO;
 import ma.usmba.springbankbackend.dtos.CurrentBankAccountDTO;
 import ma.usmba.springbankbackend.dtos.CustomerDTO;
 import ma.usmba.springbankbackend.dtos.SavingBankAccountDTO;
-import ma.usmba.springbankbackend.entities.*;
+import ma.usmba.springbankbackend.entities.AccountOperation;
+import ma.usmba.springbankbackend.entities.CurrentAccount;
+import ma.usmba.springbankbackend.entities.Customer;
+import ma.usmba.springbankbackend.entities.SavingAccount;
 import ma.usmba.springbankbackend.enums.AccountStatus;
 import ma.usmba.springbankbackend.enums.OperationType;
-import ma.usmba.springbankbackend.exceptions.BalanceNotSufficientException;
-import ma.usmba.springbankbackend.exceptions.BankAccountNotFoundException;
 import ma.usmba.springbankbackend.exceptions.CustomerNotFoundException;
 import ma.usmba.springbankbackend.repositories.AccountOperationRepository;
 import ma.usmba.springbankbackend.repositories.BankAccountRepository;
@@ -52,7 +53,7 @@ public class SpringBankBackendApplication {
             for (BankAccountDTO bankAccount : bankAccounts) {
                 for (int i = 0; i < 10; i++) {
                     String accountId;
-                    if (bankAccount instanceof SavingBankAccountDTO) {
+                    if(bankAccount instanceof SavingBankAccountDTO) {
                         accountId = ((SavingBankAccountDTO) bankAccount).getId();
                     } else {
                         accountId = ((CurrentBankAccountDTO) bankAccount).getId();
