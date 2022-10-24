@@ -1,6 +1,9 @@
 package ma.usmba.springbankbackend.services;
 
+import ma.usmba.springbankbackend.dtos.BankAccountDTO;
+import ma.usmba.springbankbackend.dtos.CurrentBankAccountDTO;
 import ma.usmba.springbankbackend.dtos.CustomerDTO;
+import ma.usmba.springbankbackend.dtos.SavingBankAccountDTO;
 import ma.usmba.springbankbackend.entities.BankAccount;
 import ma.usmba.springbankbackend.entities.CurrentAccount;
 import ma.usmba.springbankbackend.entities.Customer;
@@ -13,15 +16,15 @@ import java.util.List;
 
 public interface BankAccountService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
-    CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
-    SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
+    CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
+    SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
-    BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
+    BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
     void credit(String accountId, double amount, String description) throws BalanceNotSufficientException, BankAccountNotFoundException;
     void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
 
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 
