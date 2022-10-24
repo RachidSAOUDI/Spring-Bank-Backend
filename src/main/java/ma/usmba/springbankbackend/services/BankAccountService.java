@@ -1,9 +1,6 @@
 package ma.usmba.springbankbackend.services;
 
-import ma.usmba.springbankbackend.dtos.BankAccountDTO;
-import ma.usmba.springbankbackend.dtos.CurrentBankAccountDTO;
-import ma.usmba.springbankbackend.dtos.CustomerDTO;
-import ma.usmba.springbankbackend.dtos.SavingBankAccountDTO;
+import ma.usmba.springbankbackend.dtos.*;
 import ma.usmba.springbankbackend.entities.BankAccount;
 import ma.usmba.springbankbackend.entities.CurrentAccount;
 import ma.usmba.springbankbackend.entities.Customer;
@@ -31,4 +28,6 @@ public interface BankAccountService {
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long customerId);
+
+    List<AccountOperationDTO> accountHistory(String accountId);
 }

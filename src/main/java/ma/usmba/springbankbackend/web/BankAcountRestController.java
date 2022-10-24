@@ -1,5 +1,6 @@
 package ma.usmba.springbankbackend.web;
 
+import ma.usmba.springbankbackend.dtos.AccountOperationDTO;
 import ma.usmba.springbankbackend.dtos.BankAccountDTO;
 import ma.usmba.springbankbackend.exceptions.BankAccountNotFoundException;
 import ma.usmba.springbankbackend.services.BankAccountService;
@@ -23,6 +24,11 @@ public class BankAcountRestController {
     @GetMapping("/accounts")
     public List<BankAccountDTO> listAccounts(){
         return bankAccountService.bankAccountList();
+    }
+
+    @GetMapping("/accounts/{accountId}/operations")
+    public List<AccountOperationDTO> getHistory(@PathVariable String accountId){
+        return bankAccountService.accountHistory(accountId);
     }
 
 }

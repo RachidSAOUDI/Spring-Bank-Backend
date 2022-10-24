@@ -2,10 +2,7 @@ package ma.usmba.springbankbackend.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.usmba.springbankbackend.dtos.BankAccountDTO;
-import ma.usmba.springbankbackend.dtos.CurrentBankAccountDTO;
-import ma.usmba.springbankbackend.dtos.CustomerDTO;
-import ma.usmba.springbankbackend.dtos.SavingBankAccountDTO;
+import ma.usmba.springbankbackend.dtos.*;
 import ma.usmba.springbankbackend.entities.*;
 import ma.usmba.springbankbackend.enums.OperationType;
 import ma.usmba.springbankbackend.exceptions.BalanceNotSufficientException;
@@ -173,6 +170,12 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public void deleteCustomer(Long customerId){
         customerRepository.deleteById(customerId);
+    }
+
+    @Override
+    public List<AccountOperationDTO> accountHistory(String accountId){
+        List<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId);
+        return accountOperations.stream().map(op->dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
     }
 
 }
